@@ -1,0 +1,89 @@
+
+						Kivy:
+
+1) kivy.org --> Help --> Getting started with Kivy --> Installation --> тут инструкции по установке
+2) Узнать версию своего питона --> python --version --> у меня Python 3.7.4
+3) Обновить setuptools: python -m pip install --upgrade pip wheel setuptools virtualenv
+4) Установить зависимости: python -m pip install docutils pygments pypiwin32 kivy_deps.sdl2==0.1.* kivy_deps.glew==0.1.*
+			   python -m pip install kivy_deps.gstreamer==0.1.* --> Это для работы с медиа
+5) Устанавить сам Kivy: python -m pip install kivy==1.11.1
+6) Установить примеры Kivy: python -m pip install kivy_examples==1.11.1  Чтоб посмотреть путь примеров надо еще раз
+									вбить эту строку
+	c:\users\user\appdata\local\programs\python\python37-32\lib\site-packages (1.11.1) - мой путь примеров
+
+7) Описание классов, методов и библиотек: kivy.org --> API Reference
+8) http://www.blacksunsoftware.com/downloads.html - сайт производителя ColorMania 10.0
+-------------------------------------------------------------------------------------------------------------------
+                                            Kivy Molchanov
+1) Layouts:
+	- BoxLayout - вертикальное или горизонтальное расположение виджетов один за другим
+	- GridLayout - сетка
+	- AnchorLayout - девять точек расположения виджета
+	- StackLayout - розмещает виджеты в строку или в столбик пока виджеты влазят. Потом переходит на новую стр/стлб
+	- PageLayout - распологает виджеты на нескольких страницах
+	- FloatLayout - расположение виджетов по абсолютным координатам относительно окна
+	- RelativeLayout - расположение виджетов по координатам относительно размеров самого лайаута
+	- Scetter        - реализует мультитач
+
+2) Язык разметки .kv
+3) Параметры виджетов:
+	- orientation = 'vertical', 'gorizontal' - ориентация BoxLayout
+	- padding = 50 - отступ от границ контейнера до его содержимого, может быть вида: [50, 25] или [ 10, 15, 20, 25]
+	- spacing = 50 - промежуток между виджетами (например кнопками)
+	- size - фиксированый размер виджета в пикселях. При его использовании надо откл size_hint = (None, None)
+	- size_hint - адаптивный размер в процентах (.5, 1). Он приоритетнее чем size, поэтому надо применять None
+	- pos - позиционирования виджета в пиксилях. Начало - левый нижний угол
+	- pos_hint = {center_x = .5, center_y=.5}- адаптивные координаты виджета внутри родителя 
+		в процентах от 0 до 1. (x, center_x, right)(y, center_y, top)
+
+4) Установить пакет KivyExamples для удобного просмотра и работы с изменениями виджетов (с 4:15 в ролике №3)
+5) 
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
