@@ -1,6 +1,24 @@
 
 						Kivy:
-
+Установка гостевых дополнений на Xubuntu (https://help.ubuntu.ru/wiki/virtualbox):
+1) Когда виртмашина запущна - зайти в настройки машины и выбрать гостевую папку, которая будет общей
+2) В окне вирммашины вверху в меню: Выбрать Устройства - Подклучить образ диска... Подключится оптический диск с дополнениями
+3) Зайти по адресу: cd /media/xubuntu/VBox_GAs_6.0.6 
+4) Набрать команду: sudo sh ./VBoxLinuxAdditions.run - запустится этот файл
+5) Перезапустить виртмашину
+-------------------------------------------------------------------------------------------------------------------------
+					Установка Kivy (Molchanov Lesson 1):
+1) Набрать в браузере  get-pip download, на сайте нажать get-pip.py и скачать файл - файл скачается в /home/ubuntu/Загрузки
+2) ~/Загрузки --> sudo apt-get install python3
+3) ~/Загрузки --> sudo apt-get install python3-distutils ---установим зависимости
+4) ~/Загрузки --> sudo python3 get-pip.py
+5) Переходим на сайт kivy.org -- help -- getting started -- installation --- kivy.org/downloads --- установка под линукс
+6) Пролистывоем страницу в самый низ и переходим в manually installing kivy from source, устанавливаем оттуда зависимости
+7) Берем там зависимости, заменяет python && python-dev на python3 && python3-dev
+8) Вставляем зависимость в терминал: ~/Desctop$ sudo apt-get install -y \...текст команды
+9) Устанавливаем Cython : sudo pip3 install cython
+10) Устанавливаем Kivy  : sudo pip3 install kivy
+-------------------------------------------------------------------------------------------------------------------------
 1) kivy.org --> Help --> Getting started with Kivy --> Installation --> тут инструкции по установке
 2) Узнать версию своего питона --> python --version --> у меня Python 3.7.4
 3) Обновить setuptools: python -m pip install --upgrade pip wheel setuptools virtualenv
