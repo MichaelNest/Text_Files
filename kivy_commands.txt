@@ -18,7 +18,28 @@
 8) Вставляем зависимость в терминал: ~/Desctop$ sudo apt-get install -y \...текст команды
 9) Устанавливаем Cython : sudo pip3 install cython
 10) Устанавливаем Kivy  : sudo pip3 install kivy
--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------
+					Установка Buildozer (Molchanov Lesson 1):
+1) kivy.org -- Guides -- Programming Guide --Packaging your application -- Create a package for Android
+2) Нажать на Install buildozer's dependencies -- Установить строку с зависимостями
+3) Вернуться обратно до установки Бульдозера -- скачать с гитхаба по ссылке Buildozer: git clone https://github.com/kivy/buildozer.git
+4) cd buildozer -- sudo python3 setup.py install -- учтановка бульдозера
+5) Установка доп.зависимостей: sudo apt-get install libltdl-dev libffi-dev libssl-dev autoconf autotools-dev
+6) Переходим в папку киви-проекта: cd TestKivy
+7) Выполняем команду: buildozer init -- создался файл buildozer.spec
+8) Компелируем apt-файл нашего приложения: buildozer android debug
+9) Если что то пошло не так в установке - надо удалить в папеке проекта скрытую папку buildozer и папку bin и переустановить заново
+--------------------------------------------------------------------------------------------------------------------
+					Установка Kivy_examples:
+1) Находясь в нашем случае в Рабочем Столе: python -m pip install kivy_examples
+2) Или???: sudo apt-get install kivy-examples ---- скачиваем из репозитория
+3) Или???: sudo pip3 install kivy-examples 
+4) whereis kivy-examples --- покажет куда установился kivy-examples
+5) Переходим в папку куда установилось kivy-examples
+6) Там переходим в папку demo
+7) Там переходим в папку kivycatalog
+8) Там запускает файл main.py: python3 main.py - откроется окно виджета kivy-examples
+--------------------------------------------------------------------------------------------------------------------
 1) kivy.org --> Help --> Getting started with Kivy --> Installation --> тут инструкции по установке
 2) Узнать версию своего питона --> python --version --> у меня Python 3.7.4
 3) Обновить setuptools: python -m pip install --upgrade pip wheel setuptools virtualenv

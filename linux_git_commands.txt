@@ -57,13 +57,16 @@ Linux terminal's commands:
 23) date --- выводит текущую дату
 24) ps --- список процессов выполняемых в даный момент - посмотреть PID_of_process
 25) Cntr-Z - выход из какой то программы
+    Cntr-H - посмотреть скрытык папки
+    Cntr+Shift+C - копировать в термитнале
+    Cntr+Shift+V - тавить в терминале
 26) kill -9 PID_of_process --- вырубить процес по указанному PID
 27) exit --- закрыть терминал
 28) mv file_name.xxx FILE_NAME.xxx --- переименовать файл
 29) allias - для создания своих комманд
 	~: allias--> vi .bashrc --> alias mysite='mkdir /tmp/mysite && sshfs.......' 
 	Сохранимся и надо перезапустить систему. 
-30) 
+30) whereis kivy-examples --- укажет куда установился пакет
 
 
 
