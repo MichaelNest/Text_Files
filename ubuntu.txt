@@ -15,6 +15,8 @@
 		sudo apt install timeshift
 8) Делаем первую точку отката практически чистой системы для будущего через Timeshift
 (https://www.youtube.com/watch?v=GlwHLnVRSBQ&list=WL&index=2&t=0s)
+-----------------------------------------------------------------------------------------------
+
 9) Устанавливаем VirtualBox и пакет росширений к ней (https://losst.ru/ustanovka-virtualbox-v-ubuntu-18-04) - скачиваем пакет для Linux и устанавливаем через меню программой GDebi, пакет расширений тоже скачиваем активируем его.
 10) Устанавливаем Git (https://www.youtube.com/watch?v=f6b5p5ss1nA&list=WL&index=3):
 	sudo add-apt-repository ppa:git-core/ppa
@@ -30,8 +32,11 @@
 --- заходим в: org/gnome/gedit/preferences/encodings/candidate-encodings
 	--- вводим: ['UTF-8', 'WINDOWS-1251', 'CURRENT', 'ISO-8859-15', 'UTF-16']
 	--- выходим из редактора - готово
-Или может сработать эта строка, введенная через терминал:
-	~$ gsettings set org.gnom.gedit.preferences.encodings candidate-encodings "['UTF-8', 'WINDOWS-1251', 'CURRENT', 'ISO-8859-15', 'UTF-16']"
+Или может сработать эта строка, введенная через терминал: 'WINDOWS-1251', 'CURRENT', 'ISO-8859-15', 'UTF-16']"
+12) Установили Python3, pip3, cython, kivy, buildozer, kivy-examples и необходимые зависимости
+	Все прошло успешно.
+13) Делаем точку восстановления №2
+-----------------------------------------------------------------------------------------------
 
 
 
