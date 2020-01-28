@@ -1,0 +1,51 @@
+
+					My Ubuntu 19.10:
+
+1) Отрезаем кусок диска и делаем неразмеченную область, например в Винде - в свойствах диска
+2) Делаем загрузочную флешку - заливаем образ системы на флешку программой Rufus.
+3) Входим в биос моего Dell Latitude кнопкой F2
+4) Устанавливаем систему по этапам. Там где надо выбрать куда устанавливаем - выбираем Установку в 	Ручную - делаем диск загрузки 25МБ, /boot, ext2, primary; диск с системой - /, ext4, от 40ГБ, 	logical; и диск для данных - 100ГБ, ext4, /home, logical
+5) Устанавливаем программу для установки deb-пакетов программ - GDebi 
+(https://linuxrussia.com/gdebi-deb-ubuntu.html):
+	~$  sudo apt install gdebi
+6) Скачиваем с сайта Google deb-пакет гугл-хрома, нажимаем его и в окне в пункте Установить другими программами - выбрать установку через GDebi - установить Google Crome браузером по умолчанию
+7) Устанавливаем TimeShift - программа для возможности отката системы (http://compizomania.blogspot.com/2017/10/timeshift-linux.html):
+	~$	sudo apt-add-repository -y ppa:teejee2008/ppa
+		sudo apt update
+		sudo apt install timeshift
+8) Делаем первую точку отката практически чистой системы для будущего через Timeshift
+(https://www.youtube.com/watch?v=GlwHLnVRSBQ&list=WL&index=2&t=0s)
+9) Устанавливаем VirtualBox и пакет росширений к ней (https://losst.ru/ustanovka-virtualbox-v-ubuntu-18-04) - скачиваем пакет для Linux и устанавливаем через меню программой GDebi, пакет расширений тоже скачиваем активируем его.
+10) Устанавливаем Git (https://www.youtube.com/watch?v=f6b5p5ss1nA&list=WL&index=3):
+	sudo add-apt-repository ppa:git-core/ppa
+	sudo apt-get update
+	sudo apt-get install git
+
+	Для проверки версии Git выполните команду
+	git --version
+11) Решаем проблему кодировки символов в текстовом редакторе Gedit 
+(https://www.youtube.com/watch?v=GAsyvIJiFZ8&list=WL&index=1):
+	--- sudo apt install dconf-editor --- устанавливаем dconf-editor
+	--- в поиске вводим dconf и вызываем эту прогу
+--- заходим в: org/gnome/gedit/preferences/encodings/candidate-encodings
+	--- вводим: ['UTF-8', 'WINDOWS-1251', 'CURRENT', 'ISO-8859-15', 'UTF-16']
+	--- выходим из редактора - готово
+Или может сработать эта строка, введенная через терминал:
+	~$ gsettings set org.gnom.gedit.preferences.encodings candidate-encodings "['UTF-8', 'WINDOWS-1251', 'CURRENT', 'ISO-8859-15', 'UTF-16']"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
