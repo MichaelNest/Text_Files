@@ -74,7 +74,7 @@ pip3 install --user --upgrade cython virtualenv  # the --user should be removed 
 2) Или???: sudo apt-get install kivy-examples ---- скачиваем из репозитория
 3) Или???: sudo pip3 install kivy-examples ------ 
 	sudo apt update
-	sudo apt install python-kivy-examples ---- ось це установилось!!! 
+	sudo apt install python-kivy-examples ---- вот это вот установилось!!! 
 4) whereis kivy-examples --- покажет куда установился kivy-examples
 5) Переходим в папку куда установилось kivy-examples
 6) Там переходим в папку demo
@@ -100,10 +100,22 @@ pip3 install --user --upgrade cython virtualenv  # the --user should be removed 
 	- padding = 50 - отступ от границ контейнера до его содержимого, может быть вида: [50, 25] или [ 10, 15, 20, 25]
 	- spacing = 50 - промежуток между виджетами (например кнопками)
 	- size - фиксированый размер виджета в пикселях. При его использовании надо откл size_hint = (None, None)
-	- size_hint - адаптивный размер в процентах (.5, 1). Он приоритетнее чем size, поэтому надо применять None
+	- size_hint - адаптивный размер в процентах (.5, 1). Он приоритетнее чем size, поэтому 			надо применять None
+	- size_hint_y: .4 --- если надо изменить розмер по Y.	
+	- size_hint_x: .4 --- если надо изменить розмер по X.
 	- pos - позиционирования виджета в пиксилях. Начало - левый нижний угол
 	- pos_hint = {center_x = .5, center_y=.5}- адаптивные координаты виджета внутри родителя 
 		в процентах от 0 до 1. (x, center_x, right)(y, center_y, top)
+		pos_hint: {'center_x': .5, 'center_y' : .5}
+		pos_hint: {'center_x': .5,'top':1}
+
+	- multiline: False/True - одна или много строк для ввода в виджете TextInput
+	- font_size: 40 - размер шрифта
+
+	- on_press:
+	- on_release:
+		self.text = 'On Release' - событие на кнопке - когда на кнопку нажимают и отпускают
+
 
 4) Установить пакет KivyExamples для удобного просмотра и работы с изменениями виджетов (с 4:15 в ролике №3)
 5) 
