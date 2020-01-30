@@ -93,14 +93,16 @@ pip3 install --user --upgrade cython virtualenv  # the --user should be removed 
 	- FloatLayout - расположение виджетов по абсолютным координатам относительно окна
 	- RelativeLayout - расположение виджетов по координатам относительно размеров самого лайаута
 	- Scetter        - реализует мультитач
-
 2) Язык разметки .kv
+
 3) Параметры виджетов:
 	- orientation = 'vertical', 'gorizontal' - ориентация BoxLayout
-	- padding = 50 - отступ от границ контейнера до его содержимого, может быть вида: [50, 25] или [ 10, 15, 20, 25]
+	- padding = 50 - отступ от границ контейнера до его содержимого, может быть вида: 
+			[50, 25] или [ 10, 15, 20, 25]
 	- spacing = 50 - промежуток между виджетами (например кнопками)
-	- size - фиксированый размер виджета в пикселях. При его использовании надо откл size_hint = (None, None)
-	- size_hint - адаптивный размер в процентах (.5, 1). Он приоритетнее чем size, поэтому 			надо применять None
+	- size - фиксированый размер виджета в пикселях. При его использовании надо откл 
+			size_hint = (None, None)
+	- size_hint - адаптивный размер в процентах (.5, 1). Он приоритетнее чем size, поэтому 				надо применять None
 	- size_hint_y: .4 --- если надо изменить розмер по Y.	
 	- size_hint_x: .4 --- если надо изменить розмер по X.
 	- pos - позиционирования виджета в пиксилях. Начало - левый нижний угол
@@ -111,14 +113,51 @@ pip3 install --user --upgrade cython virtualenv  # the --user should be removed 
 
 	- multiline: False/True - одна или много строк для ввода в виджете TextInput
 	- font_size: 40 - размер шрифта
-
+		font_size: '25sp' ---  sp - значит подстраиваемый размер под параметры экрана
 	- on_press:
 	- on_release:
 		self.text = 'On Release' - событие на кнопке - когда на кнопку нажимают и отпускают
+	- halign: 'left'
+    	  valign: 'middle'
+    	  text_size: self.size --- связка команд, чтоб выравнять текст
 
+	- from kivy.core.window import Window
+	  Window.size = (480, 853) --- устанавливаем размер главного окна
+	- from kivy.config import Config
+	  Config.set('kivy', 'keyboard_mode', 'systemanddock') --- привязываем клавиатуру смартфона
+
+	- input_type: 'number'
+          input_filter: 'int' --- фильтры для ввода данных
 
 4) Установить пакет KivyExamples для удобного просмотра и работы с изменениями виджетов (с 4:15 в ролике №3)
-5) 
+
+5) Установка пакета KivyMD:
+	- Копируем репозиторий: git clone https://github.com/HeaTTheatR/KivyMD.git
+	- Заходим в него в терминале и виполняем команду: sudo python3 ./setup.py install
+	- Подключаем KivyMD к нашему проекту: from kivymd.themeing import ThemeManager
+	- Создаем обьект темы - 'light':
+			class MyApp(App):
+    				theme_cls = ThemeManager()
+    				title = 'Coppa App'
+    				def build(self):
+        				self.theme_cls.theme_style = 'light'
+        				return Container()
+	- Импортируем необходимые обьекты в файл .kv:
+		#:import MDLabel kivymd.label.MDLabel
+		#:import MDTextField kivymd.textfields.MDTextField
+		#:import MDRaisedButton kivymd.button.MDRaisedButton
+	- для исправления ошибки импорта элементов - надо загрузить в проект пакет 
+		kivy-garden.kivymd
+	- перед компиляцией надо произвести редакцию файла buildozer.spec:
+		- изменить название приложения title
+		- изменить на нужное название пакета package.name
+		- добавить в шрифты шрифт ttf - source.include_exts = ...,ttf
+		- подключение kivymd: requirements = python3, kivy==master, 
+			git+https://github.com/HeaTTheatR/KivyMD.git
+	- компилируем приложение: buildozer android debug
+
+
+
 	
 
 
