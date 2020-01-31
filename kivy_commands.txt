@@ -152,8 +152,8 @@ pip3 install --user --upgrade cython virtualenv  # the --user should be removed 
 		- изменить название приложения title
 		- изменить на нужное название пакета package.name
 		- добавить в шрифты шрифт ttf - source.include_exts = ...,ttf
-		- подключение kivymd: requirements = python3, kivy==master, 
-			git+https://github.com/HeaTTheatR/KivyMD.git
+		- подключение kivymd: requirements = python3,kivy --- скомпилировалось!!
+		(requirements = kivy==1.11.1, git+https://github.com/HeaTTheatR/KivyMD.git)??????
 	- компилируем приложение: buildozer android debug
 
 

@@ -49,7 +49,30 @@
 16) Удаление программ: sudo apt remove name_programm | sudo apt purge name_programm
 17) xkill --- принудительное завершение программ через терминал
 18) sudo reboot - принудительная перезагрузка системы через терминал
-19) 
+19) Cntr-H - посмотреть/скрыть скрытые папки и файлы
+20) lsusb - чтоб посмотреть какие usb-устройства есть
+21) Прописываем свой аппарат в библиотеках:
+	- lsusb - смотрим параметры подключенного смартфона - интересует id
+	- заходим в /lib/udev/rules.d - копируем оттуда файл 69-libmtp.rules
+	- записываем в него строку своего смартфона: idVendor первые 4 цыфры из id (lsusb) и 			idProduct - вторые 4 цыфры
+	- копируем его через sudo cp в /etc/udev/rules.d
+	- /etc/init.d/udev restart --- перезапускаем etc
+22) Установка Genymotion:
+	- скачать дистрибутив по адресу: https://www.genymotion.com/download/
+	- перейти в папку с дистрибутивом: root@linuxhelp1:~# cd /home/user1/Downloads/
+	- применить эту команду: 
+		root@linuxhelp1:/home/user1/Downloads# chmod +x genymotion-2.12.1-linux_x64.bin
+	- установить Genymotion: 
+		root@linuxhelp1:/home/user1/Downloads# ./genymotion-2.12.1-linux_x64.bin 
+	- скачать архив ARM отсюда:
+		https://github.com/m9rco/Genymotion_ARM_Translation/blob/master/package/
+			Genymotion-ARM-Translation_for_6.0.zip
+	- перетащить этот архив прям на окно эмулятора.
+	- apk-файлы тестируемых приложений тоже просто перетягиваем в окно экрана эмулятора
+
+
+
+
 
 
 
