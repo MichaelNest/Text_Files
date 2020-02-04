@@ -146,9 +146,52 @@ python3 manage.py startapp name--> создаем папку polls
 	--- ./manage.py migrate - производятся миграции и 			попутно создается база SQLite
 4) редактируем файл urls.py в папке blogengine:
 	
+5) Model-View-Controller:
+	--- Model - хранение базы данных - отвечают файлы 				models.py
+	--- View - отдельно пишем код для представления 		пользователю - отвечают HTML-шаблоны
+	--- Controller - для обработки запроса пользователя 			- отвечают файлы views.py
+6) Файл urls.py в blogengine:
+	from django.contrib import admin
+	from django.urls import path
+	from .views import hello
 
+	urlpatterns = [
+    		path('admin/', admin.site.urls),
+    		path('blog/', hello)]
+7) Чтоб использовать заданный метод hello при вызове .../blog/ - надо создать файл views.py где создать метод hello
+	from django.http import HttpResponse
+	def hello(request):
+    	    return HttpResponse('<h1>Hello World-Blog!!!</h1>')
+8) Подключаем наше второе приложение blog:
+	--- в blogengine открываем файл settings.py
+	--- в переменной INSTALLED_APPS дописываем в список 'blog'
+	---- редактируем файл urls.py в blogengine:
+	 аргументы path --- 2 позиционных - 'blog' - шаблон урла и метод, который должен выполняться при вызове этого шаблона. Еще 2 - это имя path и доп.данные в виде словаря, которые можно или нужно передать в метод.
+	---- импортируем метод include: from django.urls import include
+	---- переадресовываем через include на файд urls который в приложении blog --- path('blog/', include('blog.urls'))
+ 	---- создаем файл urls.py в blog - пишем в нем следующее: 
+from django.urls import path
+from .views import *
 
+urlpatterns = [
+    path('', post_list)
+]
+	---- переходим в файл views.py который в blog и создаем там метод post_list:
+from django.shortcuts import render
+from django.http import HttpResponse
 
+def post_list(request):
+    return HttpResponse('<h1>Hello WORLD~!!!</h1>')
+----------------------------------------------------------------------------------------------------
+
+9) Создаем в приложении blog папку templates, а в ней еще одну папку blog - для шаблонов html
+10) Создадим файл index.html
+11) Прописываем его на исполнение в view.py приложения blog:
+def post_list(request):
+    # return HttpResponse('<h1>Hello WORLD~!!!</h1>')
+    return render(request, 'blog/index.html')
+
+Все htmi-шаблоны django будет искать в папке templates
 
 
 
