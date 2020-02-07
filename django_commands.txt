@@ -105,6 +105,9 @@ python3 manage.py startapp name--> создаем папку polls
 47) Как писать свои команды в alias:
 	--- Войти через Вим в файл:~$ vim .bashrc --> 
 	--- Дописать строку: alias mysite='mkdir /tmp/mysite && sshfs root@192.168.000.103:/root/Python-3.6.1/environments/my_env/my_first_site /tmp/mysite/' 
+
+root@192.168.000.103:/root/environmentsm/my_env_m/appm/blogengine
+
 	Сохранимся и надо перезапустить систему. allias - для создания своих комманд
 48) PuTTY - утилита для ftp-соединения windows-linux. Работа с файлами сервера в эмуляторе терминала.
 		вбивать ip-адрес сервера и порт 22 или 8000
@@ -192,19 +195,122 @@ def post_list(request):
     return render(request, 'blog/index.html')
 
 Все htmi-шаблоны django будет искать в папке templates
+12) Вводим в файле view.py переменную n = 'Misha', прописываем в render свойства context={'name':n}, а в index.html-например в параметре 
+		<p>{{name}}</p>
+ прописываем имя переменной из context --- визуально отобразится misha
+13) Если переменная - список и надо вывести каждый его элемент отделно - в шаблоне применяется цикл:
+    {% for name in names %}
+        <p>
+            {{name}}
+        </p>
+    {% endfor%}
+14) Базовый шаблон-родитель:
+15) Копируем ссылку с сайта Bootstrap:
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> ---- вставляем его в Базовый шаблон
+16) Добавляем в Базовый шаблон общие для всех шаблонов компоненты: 
+	---- на сайте Bootstrap --- Components --- Navbar --- Выбираем какое нибудь меню --- копируем код --- вставляем его в Базовый шаблон в <body>
+17) в <title> размечаем общие блоки:
+	{% block title %}
+	    blog Engine
+	{% endblock %}
+18) В <body> после css-шаблона розмещаем блоки с контентом
+	{% block content %}
+	    There is no any content!!
+	{% endblock %}
 
+19) Переходим на страницу index.html и убираем там все общие елементы --- прописываем что частный шаблон росширяет общий:
+	{% extands 'blog/base_blog.html' %}
+и продублировать блоки:
+{% extends 'blog/base_blog.html' %}
 
+{% block title %}
+    blog Engine
+{% endblock %}
 
+{% block content %}
+    {% for name in names %}
+        <p>
+            {{name}}
+        </p>
+    {% endfor%}
+{% endblock %}
 
+20) Создаем папку templates на общем уровне - тут будут содержаться шаблоны для всего сайта --- создаем внутри этой папки файл base.html
+21) Переносим в файл base содержимое из base_block - а base_block станет росширять блок base: {% extends 'base.html' %}
 
+22) Подключаем base.html прописывая его в blogengine/settings.py --- TAMPLATES --- ключ DIRS --- os.path.join(BASE_DIR, 'tamplates')
+где 'tamplates'- название папки, а BASE_DIR - абсолитный путь
+куда подставляется имя файла 'tamplates'
 
+------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+			Работа с базами данных:
 
+1)Создаем модель нашей базы данных, например у нас она будет называться - post
+Для этого в нашем приложении blog в файле models.py создаем класс Post:
+class Post(models.Model):
+    title = models.CharField(max_length=150, db_index= True)
+    slug = models.SlugField(max_length=150, unique=True)
+    body = models.TextField(blank=True, db_index=True)
+    date_pub = models.DateTimeField(auto_now_add=True)
 
+SlugField почти такой же класс, как и CharField, только он дозволяет использовать буквы обоих регистров, цифры, подчеркивания и дефисы. Остальное использовать нельзя.       --- unique=True - требование уникальности
+--- db_index - флаг на индексацию, чтоб можно было лучше искать
+--- blank=True - флаг о том, что можно оставлять поле пустым
+--- auto_now_add=True - флаг о том, что поле будет заполняться автоматически при сохранении обьекта в базе данных
+--- def __str__(self):
+	return '{}'.format(self.title) --- переопределяем метод, отвечающий за вывод информации об обьекте - будет выдаваться title
 
+2) Теперь надо занести данные файла models.py в базу данных через механизм мигрфции:
+	---- ./manage.py makemigrations - в директории blog появится папка с миграциями и там будет файл с нашими данными бд
 
+3) Применяем миграции: ---- ./manage.py migrate
 
+4) Переход в консоль Джанги:
+	---- ./manage.py shell
+----------------------------------------------------------------
+5) Эксперимент в консоли:
+>>> from blog.models import Post
+>>>
+>>> p = Post(title='New Post', slug='new-slug', body='new post body')
+>>> p --- выведится имя title, которое мы переопределили в def __str__(self)
+		LoockUpstoo
+>>> p.title ---
+>>> p.save() ---после этой команды сохранения будет задано id
+>>> p.id --- выведется id
+>>> dir(p) --- чтоб посмотреть все методы обьекта p
+При создании обьекта Джанго присваевает ему менеджера обьекта.
+Он находится в атрибуте Objects - через него можно влиять на обьект.
+>>> p1 = Post.objects.create(title='new post 2', slug='new-post2', body='body2') --- создание обьекта через objects
+>>> Post.objects.all() --- посмотреть все созданные обьекты 
+>>> post = Post.objects.get(slug='new-slug') --- метод get возвращает нам обьект у которого есть указанный нами идинтификационный параметр - в данном случае - slug='new-slug' - значит обьекту post будет присвоен обиект p.
+	Метод get чувствителен к регистру данныхя, которые мы подаем в скобках.
+>>> post = Post.objects.get(slug__iexact='New-slug') --- __iexact --- позволяет нам делать регистронезависимый запрос (i --- значит независимость от регистра, а exact - значит что требуется полное совпадение)
+>>> post = Post.objects.filter(slug__contains='new') --- __contains --- значит что нам нужно вернуть все обьекты, у которых усть slug содержащий 'new', а так как их несколько - то надо использовать вместо get -- filter
+--------------------------------------------------------------------------
+6) Пишем во blog/view.py:
+	--- импортируем класс Post
+	--- создаем обьект Post
+7)  В файле templates/blog/index.html - прописываем обьект post:
+{% extends 'blog/base_blog.html' %}
 
+{% block title %}
+    Post List
+{% endblock %}
 
+{% block content %}
+    <h1 class='mb-5'>Posts:</h1>
+    {% for post in posts %}
+        <p>
+            {{post.title}}
+        </p>
+    {% endfor%}
+{% endblock %}
+обавляем еще макетов с Boostrat и верстаем дальше
+
+7) Заходим в шаблон templates/base.html и редактируем там
+8) В blog/url.py задаем параметр name='post_list_url'
 
 
 

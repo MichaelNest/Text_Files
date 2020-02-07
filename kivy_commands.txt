@@ -12,15 +12,16 @@
 
 7) Описание классов, методов и библиотек: kivy.org --> API Reference
 8) http://www.blacksunsoftware.com/downloads.html - сайт производителя ColorMania 10.0
+###############################################################################
 -----------------------------------------------------------------------------------------------------------------------						
 					Kivy:
 Установка гостевых дополнений на Xubuntu (https://help.ubuntu.ru/wiki/virtualbox):
 1) Когда виртмашина запущна - зайти в настройки машины и выбрать гостевую папку, которая будет общей
 2) В окне вирммашины вверху в меню: Выбрать Устройства - Подклучить образ диска... Подключится оптический диск с дополнениями
-2.5) Набрать команду: sudo usermod -a -G vboxsf <USERNAME>
-??3) Зайти по адресу: cd /media/xubuntu/VBox_GAs_6.0.6 
-??4) Набрать команду: sudo sh ./VBoxLinuxAdditions.run - запустится этот файл
-5) Перезапустить виртмашину
+3) Зайти по адресу: cd /media/xubuntu/VBox_GAs_6.0.6 
+4) Набрать команду: sudo sh ./VBoxLinuxAdditions.run - запустится этот файл
+5) Набрать команду: sudo usermod -a -G vboxsf <USERNAME>
+6) Перезапустить виртмашину
 -------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------
 					Установка Kivy (Molchanov Lesson 1):
@@ -28,6 +29,7 @@
 2) ~/Distributives --> sudo apt-get install python3
 3) ~/Distributives --> sudo apt-get install python3-distutils ---установим зависимости
 4) ~/Distributives --> sudo python3 get-pip.py
+4.1) sudo apt install python3-venv python3-pip - еще один вариант для Linux Ubuntu
 5) Переходим на сайт kivy.org -- help -- getting started -- installation --- kivy.org/downloads --- установка под линукс
 6) Пролистывоем страницу в самый низ и переходим в manually installing kivy from source, устанавливаем оттуда зависимости:
 Ubuntu example¶
@@ -131,7 +133,7 @@ pip3 install --user --upgrade cython virtualenv  # the --user should be removed 
           input_filter: 'int' --- фильтры для ввода данных
 
 4) Установить пакет KivyExamples для удобного просмотра и работы с изменениями виджетов (с 4:15 в ролике №3)
-
+----------------------------------------------------------------------------------------
 5) Установка пакета KivyMD:
 	- Копируем репозиторий: git clone https://github.com/HeaTTheatR/KivyMD.git
 	- Заходим в него в терминале и виполняем команду: sudo python3 ./setup.py install
@@ -156,7 +158,7 @@ pip3 install --user --upgrade cython virtualenv  # the --user should be removed 
 		- подключение kivymd: requirements = python3,kivy --- скомпилировалось!!
 		(requirements = kivy==1.11.1, git+https://github.com/HeaTTheatR/KivyMD.git)??????
 	- компилируем приложение: buildozer android debug
-
+------------------------------------------------------------------------------------------------
 6) Компиляция apt-файлов Kivy (https://habr.com/ru/post/479236/):
 	- Запустите виртуальную машину XUbuntu, откройте терминал и выполните нижеследующую 		команду:
 		--- wget https://github.com/HeaTTheatR/KivyMD-data/raw/master/install-kivy-buildozer-dependencies.sh
@@ -240,10 +242,13 @@ pip3 install --user --upgrade cython virtualenv  # the --user should be removed 
 			bin_dir = ./bin
 	- И, собственно, запускаем процесс сборки командой в терминале:
 		- buildozer android debug
+--------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
 	
+tar -xf crystax-ndk-10.3.2-linux-x86_64.tar.xz --- установить crystax, рописатть его в buildozer.spec - где адрес до NDK
 
-
-
+configure: error: C compiler cannot create executables
+See 'config.log' for bore details
 
 
 
