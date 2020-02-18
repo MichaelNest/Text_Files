@@ -247,8 +247,10 @@ pip3 install --user --upgrade cython virtualenv  # the --user should be removed 
 	
 tar -xf crystax-ndk-10.3.2-linux-x86_64.tar.xz --- установить crystax, рописатть его в buildozer.spec - где адрес до NDK
 
-configure: error: C compiler cannot create executables
-See 'config.log' for bore details
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+
 
 
 
