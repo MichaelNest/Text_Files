@@ -555,13 +555,165 @@ Class и id – это имена, которые ты сама присваив
 	--- post_list.html
 	--- blog.css
 -------------------------------------------------------------------
-46) 
+46) Расширение шаблона: --- создаем файл base.html, копируем в него содержимое файла post_list.html
+47) вставляем 
+		{% block content %}
+            	{% endblock %}
+вместо {% for post in posts %} содержимое {% endfor %}
+48) Изменяем файл post_list.html :
+	{% extends 'blog/base.html' %}
+          {% block content %}
+              {% for post in posts %}
+              <div class="post">
+                <div class="date">
+                  <p>published: {{post.published_date}}</p>
+                </div>
+                <h1><a href="">{{post.title}}</a></h1>
+                <p>{{ post.text|linebreaksbr }}</p>
+              </div>
+              {% endfor %}
+          {% endblock %}
+Теперь файл post_list.html росширяет файл blog.html
+-------------------------------------------------------------------
+
+49) <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+	--- post_detail - параметр который означает, что Django будет искать URL с именем post_detail в файле blog.urls.py
+	--- pk=post.pk? pk — это сокращение от primary key (первичный ключ). Он уникальным образом определяет каждую запись в базе данных. Поскольку мы не задали первичного ключа в нашей модели Post, Django создал такой ключ за нас (по умолчанию это порядковый номер, то есть 1, 2, 3…) и добавил поле pk к каждой записи блога. Для получения первичного ключа мы напишем post.pk — точно так же, как мы получали значения остальных полей (title, author и т.д.) нашего объекта Post.
+
+50) Создадим в urls.py URL для представления post_detail:
+	--- Добавим строчку path('post/<int:pk>/', views.post_detail, name='post_detail') в файл blog/urls.py
+	--- post/<int:pk>/ определяет шаблон URL-адреса.
+51) Создаем представление в файле view.py:
+	--- from django.shortcuts import render, get_object_or_404
+	def post_detail(request, pk):
+    		post = get_object_or_404(Post, pk=pk)
+    		return render(request, 'blog/post_detail.html', {'post': post})
+
+52) Создадим шаблон htmk для post_detail:
+	--- {% extends 'blog/base.html' %}
+
+{% block content %}
+    <div class="post">
+        {% if post.published_date %}
+            <div class="date">
+                {{ post.published_date }}
+            </div>
+        {% endif %}
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.text|linebreaksbr }}</p>
+    </div>
+{% endblock %}
+
+53) Обновим статические файлы на сервере:
+	--- (ola.pythonanywhere.com)$ python manage.py collectstatic
+
+Команда python manage.py collectstatic обновляет статические файлы,
+типа как команда python manage.py migrate
+-------------------------------------------------------------------
+
+54) Создаем файл для форм: blog/forms.py
+
+55) Теперь открой его и набери следующее:
+
+blog/forms.py
+from django import forms
+
+from .models import Post
+
+class PostForm(forms.ModelForm):
+
+    class Meta:
+        model = Post
+        fields = ('title', 'text',)
+
+56) Добавляем в blog/basr.html строку:
+	<body>
+    		<div class="page-header">
+        		<a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+
+57) Нам нужно открыть файл blog/urls.py и добавить строку:
+
+blog/urls.py
+	--- path('post/new/', views.post_new, name='post_new')
+
+58) Время открыть файл blog/views.py и добавить:
+	--- from .forms import PostForm
+	--- def post_new(request):
+    		form = PostForm()
+    		return render(request, 'blog/post_edit.html', {'form': form})
+
+59) Нужно создать файл post_edit.html в директории blog/templates/blog:
+	--- {% extends 'blog/base.html' %}
+
+{% block content %}
+    <h1>New post</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %} - форма готова
+
+60) Снова открой файл blog/views.py - изменим данный метод:
+	--- def post_new(request):
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = timezone.now()
+            post.save()
+            return redirect('post_detail', pk=post.pk)
+    else:
+        form = PostForm()
+    return render(request, 'blog/post_edit.html', {'form': form})
+
+61) Переходим в blog/post_detail.html и вставляем строку:
+	---	{% endif %}
+<a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+
+62) В файле blog/urls.py добавь:
+	---  path('post/<int:pk>/edit/', views.post_edit, name='post_edit')
+
+63) Давай откроем файл blog/views.py и добавим в самый конец следующее:
+	--- def post_edit(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = timezone.now()
+            post.save()
+            return redirect('post_detail', pk=post.pk)
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'blog/post_edit.html', {'form': form})
+
+64) Если тебе нужно больше информации о формах в Django, обратись к официальной документации: 
+	--- https://docs.djangoproject.com/en/2.0/topics/forms/
+
+65) В файле blog/templates/blog/base.html найди page-header div и тег <a> - надо его изменить - чтоб возможность создавать и редактировать посты была только у авторизировавшегося пользователя:
+	--- blog/templates/blog/base.html
+{% if user.is_authenticated %}
+    <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+{% endif %}
+
+66) Помнишь иконку редактирования, которую мы добавили на страницу поста? Чтобы посторонние не смогли менять уже созданные посты, нам нужно изменить страничку похожим образом.
+
+Открой файл blog/templates/blog/post_detail.html и измени на эту строку:
+	--- {% if user.is_authenticated %}
+     <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+{% endif %}
 
 
+###################################################################
+-------------------------------------------------------------------
+Хауди-Хо:
 
-
-
-
+1) python -m django --version --- посмотреть версию Django
+2) python manage.py runserver --- без указания ай-пи - по умолчанию сервер запустится на 127.0.0.1:8000
+3) INSTALLED_APPS = ['blog.apps.BlogConfig',.....] - прописываем наше приложение как установленное в проекте - после этого Джанго позволит создать миграцию --- python manage.py makemigrations blog
+4) 
 
 
 
