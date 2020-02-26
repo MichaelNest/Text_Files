@@ -714,6 +714,107 @@ blog/urls.py
 2) python manage.py runserver --- без указания ай-пи - по умолчанию сервер запустится на 127.0.0.1:8000
 3) INSTALLED_APPS = ['blog.apps.BlogConfig',.....] - прописываем наше приложение как установленное в проекте - после этого Джанго позволит создать миграцию --- python manage.py makemigrations blog
 4) 
+-------------------------------------------------------------------
+###################################################################
+###################################################################
+-------------------------------------------------------------------
+
+https://developer.mozilla.org/ru/docs/Learn/Server-side/Django
+
+1) sudo apt-get install python3-pip --- установка python3 и pip
+2) sudo pip3 install virtualenvwrapper --- установка виртуальных сред
+3) --- deactivate — Выход из текущей виртуальной среды Python
+	--- workon — Список доступных виртуальных сред
+	--- workon name_of_environment — Активация конкретной 	виртуальной среды Python
+	--- rmvirtualenv name_of_environment — Удаление конкретной виртуальной среды.
+-------------------------------------------------------------------
+4) python3 -m venv myvenv - создаем виртуальное окружение в какой небудь специально созданной папки для виртуальных окружений.
+5) Заходим в папку myvenv и набираем команду:
+		--- source bin/activate
+   Для выхода из виртуального окружения заходим в myvenv и набираем:       --- deactivate
+6) (myvenv) ~$ python3 -m pip install --upgrade pip --- проверяем и устанавливаем pip
+7) pip install django==2.1.* --- устанавливаем Джанго (Django~=2.2.4)
+   pip freeze или python3 -m django --version --- посмотреть версию джанго
+8) mkdir my_site - создаем папку сайта, переходим в нее
+9) django-admin startproject mysite . --- создаем наш сайт
+-------------------------------------------------------------------
+10) python3 manage.py startapp catalog --- создание приложения Catalog
+
+11) После создания приложения, нам нужно зарегистрировать его в проекте, чтобы различные утилиты затрагивали его своим действием (например при добавлении моделей в базу данных). Приложения регистрируются добавлением их названий в список INSTALLED_APPS в настройках проекта(который, как мы помним, называется settings.py). Записываем в : 
+INSTALLED_APPS = [..., 'catalog.apps.CatalogConfig',]
+
+Новая строка указывает на файл конфигурации приложения (CatalogConfig), который был создан в /locallibrary/catalog/apps.py , когда вы создали приложение.
+
+12) TIME_ZONE = 'Europe/Moscow'
+    LANGUAGE_CODE = 'ru-ru'
+13) # Добавьте URL соотношения, чтобы перенаправить запросы с корневового URL, на URL приложения 
+from django.views.generic import RedirectView
+urlpatterns = [...,
+    path('', RedirectView.as_view(url='/catalog/',
+permanent=True)),] 
+
+14) Используйте static() чтобы добавить соотношения для статических файлов
+# Только на период разработки
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+15) Напоследок, создайте файл urls.py внутри папки catalog, и добавьте следующий код, чтобы определить (пустой) urlpatterns. Сюда мы будем добавлять наши URL соотношения, по мере разработки сайта. 
+from django.urls import path
+from . import views
+
+urlpatterns = [ ]
+
+16) Создаем и добавляем миграции:
+	--- python manage.py makemigrations
+	--- python manage.py migrate
+Необходимо выполнять команды выше каждый раз, когда вы меняете модели таким образом, что структура таблицы изменится(включая добавления и удаления как отдельных полей, так и целых моделей).
+
+Заметка: Вам следует перезапускать миграцию и заново тестировать сайт, после того как вы делаете важные изменения. 
+-------------------------------------------------------------------
+
+17) Определение моделей нашей библиотеки:
+	--- from django.db import models
+	--- модель жанра:
+lass Genre(models.Model):
+    """
+    Model representing a book genre (e.g. Science Fiction, Non Fiction).
+    """
+    name = models.CharField(max_length=200, help_text="Enter a book genre (e.g. Science Fiction, French Poetry etc.)")
+    
+    def __str__(self):
+        """
+        String for representing the Model object (in Admin site etc.)
+        """
+        return self.name
+	
+Смотри Аргументы и методы для работы с моделями и бд тут:
+	https://developer.mozilla.org/ru/docs/Learn/Server-side/Django/Models
+
+18) Теперь все ваши модели созданы. Теперь переустановите миграцию базы данных, чтобы добавить их в свою базу данных.
+
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
