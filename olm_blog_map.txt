@@ -171,6 +171,55 @@
 # 77_Убираем метод save(self), потому что метод ModelForm имеет встроеный метод save (blog/forms.py)
 
 ------------------------lesson_8_Create_Forms_Post-----------------
+# 78_Создаем класс PostForms, в нем класс Meta, а в нем необходимые поля (blog/forms.py)
+
+# 79_Создаем метод clean_slug(self) для приведения поля slug к нижнему регистру (blog/forms.py)
+
+# 80_Создаем урл-шаблон для формы создания тегов (blog/urls.py)
+
+# 81_Создаем метод get класса TagCreate (blog/views.py)
+
+<!-- 82_Создаем файл-шаблон tag_create.html, наследуем его от базового шаблона--> (blog/templetes/blog/post_create_form.html)
+
+# 82_Создаем метод post в классе TagCreate, проверяем валидность введенной информации (blog/views.py)
+
+# 83_Создаем метод для автоматической генерации slug - def gen_slug(s)(blog/models.py)
+
+# 84_Используем метод slugify - он автоматически из имени title делает slug (blog/models.py)
+
+>>> allow_unicode = True - нужно включить, чтоб метод slugify понимал киррилицу
+
+>>> time() - генерирует количество секунд с 1970 года да настоящего момента. Используем это как уникальный идентификатор (from time import time)
+
+# 85_Переопределяем метод save класса Post - для того чтоб генерировать новый slug только при создании экземпляра класса Post.
+(blog/models.py)
+
+# 86_Переносим класс TagCreate из blog/views.py в blog/utils.py и делаем Миксин - наследуем в blog/views.py классы TagCreate и PostCreate от класса blog/utils.py/ObjectCreateMixin, оставляем только поля model_form и template
+
+----------------lesson_9_Change_Post_Tag_by_form-------------------
+
+#87 Создаем класс для изменения тэгов - class TagUpdate(View) (blog/view.py)
+
+<!-- 88_Создаем шаблон tag_update_form.html для формы изменения тэгов--> (blog/templates/blog/tag_update_form.html)
+
+# 89_Создаем урл-шаблон для перехода на страничку изменения тэга (blog/urls.py)
+
+# 90_Создаем метод get_update_url(self) для ссылки на конкретный обьект - для class Tag и для class Post - создаем методы get и post. (blog/models.py)
+
+#91 Создаем Mixin-класс для изменения тэгов - class ObjectUpdateMixin (blog/utils.py)
+
+# 92_Создаем class PostUpdate(ObjectUpdateMixin, View) (blog/views.py)
+
+# 93_Создаем урл-шаблон для перехода на страничку изменения поста
+
+<!-- 94_Создаем файл-шаблон post_update_form.html, наследуем его от базового шаблона-->(blog/templates/blog/post_update_form.html)
+
+-----------------lesson_10_Delete_forms_Post_and_Tag---------------
+
+
+
+
+
 
 
 
