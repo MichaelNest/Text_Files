@@ -216,11 +216,56 @@
 
 -----------------lesson_10_Delete_forms_Post_and_Tag---------------
 
+# 95_Создаем класс TagDelete для удаления тегов, в нем реализуем два метода - get и post (blog/views.py)
 
+# 96_Создаем урл-шаблон для перехода на страничку удаления тега (blog/urls.py)
 
+<!-- 97_Создаем шаблон формы удаления тегов--> (blog/templates/blog/tag_delete_form.html)
 
+# 98_Создаем метод get_delete_url(self) для ссылки на конкретный обьект - для class Tag и для class Post - создаем методы get и post. (blog/models.py)
 
+# 99 Создаем Mixin-класс для изменения тэгов - class ObjectDeleteMixin (blog/utils.py)
 
+# 100_Создаем class PostDelete(ObjectUpdateMixin, View) (blog/views.py)
+
+# 101_Создаем урл-шаблон для перехода на страничку удаления поста (blog/urls.py)
+
+<!-- 102_Создаем шаблон формы удаления постов--> (blog/templates/blog/post_delete_form.html)
+
+--------------------lesson_11_Custom_CSS---------------------------
+<!-- 103_Определяем админ-панель-->(templates/base.html)
+
+<!-- 104_Определяем блок admin-panel-->(blog/templates/blog/base_blog.html)
+
+# 105_Создаем папку my_blog/static/css - для статических css-шаблонов
+
+/*106_Создаем файл для стилей css */ (static/css/styles.css)
+
+# 107_Заходим в main_blog/settings.py и определяем список STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static') под переменной STATIC_URL = '/static/'
+
+<!-- 108_Пишем команду {% load static %}, чтоб иметь возможность импортировать css-статику--> (my_blog/templates/base.html)
+
+<!-- 109_Пишем link для указания на наши стили href="{% static 'css/styles.css' %}"--> (my_blog/templates/base.html)
+
+<!-- 109_Добавляем в класс align-items-center для назначения вертикального выравнивания админ-панели--> (my_blog/templates/base.html)
+
+/* 110_Чтоб панель отоброзилась вертикольно надо после пункта 109_ указать display: block; */ (my_blog/static/css/styles.css)
+
+# 111_Добавляем в class ObjectDetailMixin в context еще один атрибут - 'admin_object': obj (blog/utils.py)
+
+<!-- 112_Передаем ссылки href="{{ admin_object.get_update_url }}" и href="{{ admin_object.get_delete_url }}"--> (base_blog.html)
+
+# 113_Добавляем в class ObjectDetailMixin в context еще один атрибут - 'detail': True (blog/utils.py)
+
+<!-- 114_Добавляем в class элементы edit и delete и параметр css - style="{% if detail %} display: block; {% endif %}" (base_block.html)
+
+/* 115_Скроем эти кнопки, если мы находимся не в самом окне поста*/ (static/css/styles.css)
+
+# 116_Копируем из Bootstrap из Home/Introduction код JS-скриптов и вставляем его в основной шаблон my_blog/templates/base.html - чтоб реализовать выпадающий список для кнопок нашего админ-меню
+
+# 117_Копируем из Bootstrap из Components/Dropdowns код выпадающего меню - и вставляем его в base_blog.html
+
+-------------------lesson_12_Access_limitation---------------------
 
 
 
